@@ -2,8 +2,9 @@
 
 import { Moon, Sun, GraduationCap, History, User } from "lucide-react";
 import { useTheme } from "next-themes";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import Link from "next/link";
+import { cn } from "@/lib/utils";
 import { useEffect, useState } from "react";
 import { authService } from "@/services/auth-service";
 
@@ -23,12 +24,13 @@ export function Header() {
           <span className="text-xl font-bold tracking-tight">MUST Results</span>
         </Link>
         <div className="flex items-center gap-2">
-          <Button variant="ghost" size="sm" asChild className="hidden sm:flex gap-2">
-            <Link href="/history">
-              <History className="h-4 w-4" />
-              History
-            </Link>
-          </Button>
+          <Link 
+            href="/history" 
+            className={cn(buttonVariants({ variant: "ghost", size: "sm" }), "hidden sm:flex gap-2")}
+          >
+            <History className="h-4 w-4" />
+            History
+          </Link>
           
           <Button
             variant="ghost"
@@ -41,16 +43,20 @@ export function Header() {
           </Button>
 
           {user ? (
-            <Button variant="outline" size="sm" asChild className="gap-2">
-              <Link href="/history">
-                <User className="h-4 w-4" />
-                <span className="hidden sm:inline">Profile</span>
-              </Link>
-            </Button>
+            <Link 
+              href="/history" 
+              className={cn(buttonVariants({ variant: "outline", size: "sm" }), "gap-2")}
+            >
+              <User className="h-4 w-4" />
+              <span className="hidden sm:inline">Profile</span>
+            </Link>
           ) : (
-            <Button size="sm" asChild>
-              <Link href="/login">Login</Link>
-            </Button>
+            <Link 
+              href="/login" 
+              className={buttonVariants({ size: "sm" })}
+            >
+              Login
+            </Link>
           )}
         </div>
       </div>

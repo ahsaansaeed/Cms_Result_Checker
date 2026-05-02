@@ -4,7 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { AlertCircle, Download, ExternalLink } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 
 interface ResultDisplayProps {
   status: "idle" | "loading" | "success" | "error";
@@ -38,12 +38,15 @@ export function ResultDisplay({
           <CardTitle className="text-xl">Student Grade Chart</CardTitle>
           {status === "success" && resultUrl && (
             <div className="flex gap-2">
-              <Button variant="outline" size="sm" asChild>
-                <a href={resultUrl} target="_blank" rel="noopener noreferrer">
-                  <ExternalLink className="h-4 w-4 mr-2" />
-                  Open Original
-                </a>
-              </Button>
+              <a 
+                href={resultUrl} 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className={buttonVariants({ variant: "outline", size: "sm" })}
+              >
+                <ExternalLink className="h-4 w-4 mr-2" />
+                Open Original
+              </a>
             </div>
           )}
         </CardHeader>

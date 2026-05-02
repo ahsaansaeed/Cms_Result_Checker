@@ -7,7 +7,7 @@ import { historyService } from "@/services/history-service";
 import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import { SearchHistoryItem } from "@/types";
 import { ExternalLink, History, Loader2, Trash2 } from "lucide-react";
 import Link from "next/link";
@@ -51,9 +51,9 @@ export default function HistoryPage() {
                 View your 20 most recent result lookups.
               </p>
             </div>
-            <Button variant="outline" asChild>
-              <Link href="/">Back to Checker</Link>
-            </Button>
+            <Link href="/" className={buttonVariants({ variant: "outline" })}>
+              Back to Checker
+            </Link>
           </div>
 
           {loading ? (
@@ -73,9 +73,9 @@ export default function HistoryPage() {
                     You haven't checked any results yet, or your history is empty.
                   </p>
                 </div>
-                <Button asChild>
-                  <Link href="/">Check a Result Now</Link>
-                </Button>
+                <Link href="/" className={buttonVariants()}>
+                  Check a Result Now
+                </Link>
               </CardContent>
             </Card>
           ) : (
@@ -95,11 +95,14 @@ export default function HistoryPage() {
                       <span className="text-xs text-muted-foreground mr-4">
                         {new Date(item.searchedAt).toLocaleDateString()}
                       </span>
-                      <Button variant="ghost" size="icon" asChild>
-                        <a href={item.resultUrl} target="_blank" rel="noopener noreferrer">
-                          <ExternalLink className="h-4 w-4" />
-                        </a>
-                      </Button>
+                      <a 
+                        href={item.resultUrl} 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className={buttonVariants({ variant: "ghost", size: "icon" })}
+                      >
+                        <ExternalLink className="h-4 w-4" />
+                      </a>
                     </div>
                   </CardHeader>
                 </Card>
