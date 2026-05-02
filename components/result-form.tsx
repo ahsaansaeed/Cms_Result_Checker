@@ -51,7 +51,7 @@ export function ResultForm({
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="space-y-2">
             <Label htmlFor="session">Academic Session</Label>
-            <Select value={session} onValueChange={setSession}>
+            <Select value={session} onValueChange={(val) => val && setSession(val)}>
               <SelectTrigger id="session">
                 <SelectValue placeholder="Select Session" />
               </SelectTrigger>
@@ -67,7 +67,7 @@ export function ResultForm({
 
           <div className="space-y-2">
             <Label htmlFor="program">Program Code</Label>
-            <Select value={program} onValueChange={setProgram}>
+            <Select value={program} onValueChange={(val) => val && setProgram(val)}>
               <SelectTrigger id="program">
                 <SelectValue placeholder="Select Program" />
               </SelectTrigger>
@@ -98,7 +98,7 @@ export function ResultForm({
             <Label htmlFor="suffix">Campus/Suffix</Label>
             <Select 
               value={suffix || "none"} 
-              onValueChange={(val) => setSuffix(val === "none" ? "" : val)}
+              onValueChange={(val) => setSuffix(val === "none" || !val ? "" : val)}
             >
               <SelectTrigger id="suffix">
                 <SelectValue placeholder="Select Suffix" />
