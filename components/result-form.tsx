@@ -70,18 +70,20 @@ export function ResultForm({
           <div className="space-y-2">
             <Label htmlFor="session">Academic Session</Label>
             <Popover open={sessionOpen} onOpenChange={setSessionOpen}>
-              <PopoverTrigger asChild>
-                <Button
-                  variant="outline"
-                  role="combobox"
-                  aria-expanded={sessionOpen}
-                  className="w-full justify-between font-normal h-10 border-input bg-background"
-                >
-                  {session
-                    ? SESSIONS.find((s) => s.value === session)?.label
-                    : "Select Session"}
-                  <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-                </Button>
+              <PopoverTrigger
+                render={
+                  <Button
+                    variant="outline"
+                    role="combobox"
+                    aria-expanded={sessionOpen}
+                    className="w-full justify-between font-normal h-10 border-input bg-background"
+                  />
+                }
+              >
+                {session
+                  ? SESSIONS.find((s) => s.value === session)?.label
+                  : "Select Session"}
+                <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
               </PopoverTrigger>
               <PopoverContent className="w-[var(--radix-popover-trigger-width)] p-0">
                 <Command>
@@ -117,18 +119,20 @@ export function ResultForm({
           <div className="space-y-2">
             <Label htmlFor="program">Program Code</Label>
             <Popover open={programOpen} onOpenChange={setProgramOpen}>
-              <PopoverTrigger asChild>
-                <Button
-                  variant="outline"
-                  role="combobox"
-                  aria-expanded={programOpen}
-                  className="w-full justify-between font-normal h-10 border-input bg-background"
-                >
-                  {program
-                    ? PROGRAMS.find((p) => p.value === program)?.label
-                    : "Select Program"}
-                  <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-                </Button>
+              <PopoverTrigger
+                render={
+                  <Button
+                    variant="outline"
+                    role="combobox"
+                    aria-expanded={programOpen}
+                    className="w-full justify-between font-normal h-10 border-input bg-background"
+                  />
+                }
+              >
+                {program
+                  ? PROGRAMS.find((p) => p.value === program)?.label
+                  : "Select Program"}
+                <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
               </PopoverTrigger>
               <PopoverContent className="w-[var(--radix-popover-trigger-width)] p-0">
                 <Command>
