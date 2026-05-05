@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { SESSIONS, PROGRAMS, SUFFIXES } from "@/lib/constants";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -11,8 +12,22 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import {
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList,
+} from "@/components/ui/command";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { Search } from "lucide-react";
+import { Search, Check, ChevronsUpDown } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 interface ResultFormProps {
   session: string;
@@ -39,6 +54,9 @@ export function ResultForm({
   onCheck,
   isLoading,
 }: ResultFormProps) {
+  const [programOpen, setProgramOpen] = useState(false);
+  const [sessionOpen, setSessionOpen] = useState(false);
+
   return (
     <Card className="w-full max-w-2xl mx-auto shadow-lg">
       <CardHeader>
@@ -51,34 +69,96 @@ export function ResultForm({
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="space-y-2">
             <Label htmlFor="session">Academic Session</Label>
-            <Select value={session} onValueChange={(val) => val && setSession(val)}>
-              <SelectTrigger id="session">
-                <SelectValue placeholder="Select Session" />
-              </SelectTrigger>
-              <SelectContent>
-                {SESSIONS.map((s) => (
-                  <SelectItem key={s.value} value={s.value}>
-                    {s.label} ({s.value})
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
+            <Popover open={sessionOpen} onOpenChange={setSessionOpen}>
+              <PopoverTrigger asChild>
+                <Button
+                  variant="outline"
+                  role="combobox"
+                  aria-expanded={sessionOpen}
+                  className="w-full justify-between font-normal h-10 border-input bg-background"
+                >
+                  {session
+                    ? SESSIONS.find((s) => s.value === session)?.label
+                    : "Select Session"}
+                  <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent className="w-[var(--radix-popover-trigger-width)] p-0">
+                <Command>
+                  <CommandInput placeholder="Search session..." className="h-9" />
+                  <CommandList>
+                    <CommandEmpty>No session found.</CommandEmpty>
+                    <CommandGroup>
+                      {SESSIONS.map((s) => (
+                        <CommandItem
+                          key={s.value}
+                          value={`${s.label} ${s.value}`}
+                          onSelect={() => {
+                            setSession(s.value);
+                            setSessionOpen(false);
+                          }}
+                        >
+                          <Check
+                            className={cn(
+                              "mr-2 h-4 w-4",
+                              session === s.value ? "opacity-100" : "opacity-0"
+                            )}
+                          />
+                          {s.label} ({s.value})
+                        </CommandItem>
+                      ))}
+                    </CommandGroup>
+                  </CommandList>
+                </Command>
+              </PopoverContent>
+            </Popover>
           </div>
 
           <div className="space-y-2">
             <Label htmlFor="program">Program Code</Label>
-            <Select value={program} onValueChange={(val) => val && setProgram(val)}>
-              <SelectTrigger id="program">
-                <SelectValue placeholder="Select Program" />
-              </SelectTrigger>
-              <SelectContent>
-                {PROGRAMS.map((p) => (
-                  <SelectItem key={p.value} value={p.value}>
-                    {p.label} ({p.value})
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
+            <Popover open={programOpen} onOpenChange={setProgramOpen}>
+              <PopoverTrigger asChild>
+                <Button
+                  variant="outline"
+                  role="combobox"
+                  aria-expanded={programOpen}
+                  className="w-full justify-between font-normal h-10 border-input bg-background"
+                >
+                  {program
+                    ? PROGRAMS.find((p) => p.value === program)?.label
+                    : "Select Program"}
+                  <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent className="w-[var(--radix-popover-trigger-width)] p-0">
+                <Command>
+                  <CommandInput placeholder="Search program..." className="h-9" />
+                  <CommandList>
+                    <CommandEmpty>No program found.</CommandEmpty>
+                    <CommandGroup>
+                      {PROGRAMS.map((p) => (
+                        <CommandItem
+                          key={p.value}
+                          value={`${p.label} ${p.value}`}
+                          onSelect={() => {
+                            setProgram(p.value);
+                            setProgramOpen(false);
+                          }}
+                        >
+                          <Check
+                            className={cn(
+                              "mr-2 h-4 w-4",
+                              program === p.value ? "opacity-100" : "opacity-0"
+                            )}
+                          />
+                          {p.label} ({p.value})
+                        </CommandItem>
+                      ))}
+                    </CommandGroup>
+                  </CommandList>
+                </Command>
+              </PopoverContent>
+            </Popover>
           </div>
         </div>
 
